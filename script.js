@@ -1,5 +1,5 @@
 // pages/index.js
-import React from 'react';
+import React, { useState } from 'react';
 
 const Posts = ({ posts }) => (
     <div>
@@ -54,10 +54,12 @@ const posts = [
 ];
 
 
-// Initial state
-let currentPage = 1;
-let postsPerPage = 10;
-let currentSort = 'newest';
+const Posts = ({ posts }) => {
+  // State untuk currentPage, postsPerPage, dan currentSort
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage, setPostsPerPage] = useState(10);
+  const [currentSort, setCurrentSort] = useState('newest'); }
+
 
 // Function to render posts
 function renderPosts(posts) {
@@ -200,3 +202,25 @@ function renderPostsWithLabel(posts) {
 // Initial render
 renderPostsWithLabel(getCurrentPagePosts());
 renderPagination(getTotalPages(), currentPage);
+
+const changePage = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    renderPosts(getCurrentPagePosts());
+    renderPagination(getTotalPages(), currentPage);
+  };
+
+  // Function untuk mengganti show-per-page
+  const changeShowPerPage = () => {
+    setPostsPerPage(parseInt($("#showPerPage").val()));
+    setCurrentPage(1);
+    renderPosts(getCurrentPagePosts());
+    renderPagination(getTotalPages(), currentPage);
+  };
+
+  // Function untuk mengurutkan posting
+  const sortPosts = () => {
+    setCurrentSort($("#sort").val());
+    setCurrentPage(1);
+    renderPosts(getCurrentPagePosts());
+    renderPagination(getTotalPages(), currentPage);
+  };
